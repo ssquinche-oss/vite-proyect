@@ -1,14 +1,18 @@
 import "./styles/home.css";
+import { useEffect, useState } from 'react';
 import { type Task } from '../types/Task';
 import { Card, Statistic, Row, Col } from 'antd';
+import { fetchData, project } from '../services/api';
 
-interface StatsProps {
-  tasks: Task[];
-}
+function Estadisticas() {
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-function Estadisticas({ tasks }: StatsProps) {
+  useEffect(() => {
+    fetchData(project).then(data => setTasks(data));
+  }, []);
+
   const total = tasks.length;
-  const completadas = tasks.filter(t => t.completed).length;
+  const completadas = tasks.filter(t => t.Completar).length;
   const pendientes = total - completadas;
 
   return (
@@ -36,7 +40,6 @@ function Estadisticas({ tasks }: StatsProps) {
             </Card>
           </Col>
         </Row>
-
       </div>
     </div>
   );

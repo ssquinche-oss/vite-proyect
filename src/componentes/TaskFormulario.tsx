@@ -15,9 +15,9 @@ function TaskFormulario({ onAdd }: TaskFormularioProps) {
 
     const nuevaTarea: Task = {
       id: Date.now(),
-      title: titulo,
-      priority: prioridad,
-      completed: false,
+      Titulo: titulo,
+      Prioridad: prioridad,
+      Completar: false,
     };
 
     onAdd(nuevaTarea);

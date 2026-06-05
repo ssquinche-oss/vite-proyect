@@ -1,41 +1,65 @@
-import React from 'react';
-import "./styles/home.css";
+import { useEffect, useState } from 'react';
+import { message } from 'antd';
 import { type Task } from '../types/Task';
 import TaskFormulario from '../componentes/TaskFormulario';
 import TaskLista from '../componentes/TaskLista';
+import { fetchData, createDataFetch, deleteDataFetch, project } from '../services/api';
 
-interface TareasProps {
-  tasks: Task[];
-  setTasks: (tasks: Task[]) => void;
-}
+function Tareas() {
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-function Tareas({ tasks, setTasks }: TareasProps) {
-  const agregarTarea = (task: Task) => {
-    setTasks([...tasks, task]);
+  const cargarTareas = async () => {
+    try {
+      const data = await fetchData(project);
+      setTasks(data);
+    } catch {
+      message.error('Error al cargar tareas');
+    }
   };
 
-  const completarTarea = (id: number) => {
+  useEffect(() => {
+    cargarTareas();
+  }, []);
+
+  const handleAdd = async (task: Task) => {
+    try {
+      await createDataFetch(project, {
+        Titulo: task.Titulo,
+        Prioridad: task.Prioridad,
+        Completar: false,
+      });
+      message.success('Tarea creada');
+      cargarTareas();
+    } catch {
+      message.error('Error al crear la tarea');
+    }
+  };
+
+  const handleComplete = (id: number) => {
     setTasks(tasks.map(t =>
-      t.id === id ? { ...t, completed: true } : t
+      t.id === id ? { ...t, Completar: true } : t
     ));
   };
 
-  const eliminarTarea = (id: number) => {
-    setTasks(tasks.filter(t => t.id !== id));
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteDataFetch(`${project}/${id}`);
+      message.success('Tarea eliminada');
+      cargarTareas();
+    } catch {
+      message.error('Error al eliminar');
+    }
   };
 
   return (
-    <div className="div-pagina">
-      <div className="div-contenedor">
-        <h1 className="Titulo">Tareas</h1>
-        <p className="mensaje">Agrega y gestiona tus tareas.</p>
-        <TaskFormulario onAdd={agregarTarea} />
-        <TaskLista
-          tasks={tasks}
-          onComplete={completarTarea}
-          onDelete={eliminarTarea}
-        />
-      </div>
+    <div style={{ padding: 24 }}>
+      <h1 style={{ color: '#fff' }}>Administrador de Tareas</h1>
+      <TaskFormulario onAdd={handleAdd} />
+      <TaskLista
+        tasks={tasks}
+        onComplete={handleComplete}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }

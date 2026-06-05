@@ -4,18 +4,16 @@ import Menu from './componentes/Menu';
 import Home from './pages/Home';
 import Tareas from './pages/Tareas';
 import Estadisticas from './pages/Estadisticas';
-import { type Task } from './types/Task';
 
 function App() {
   const [page, setPage] = useState<'Inicio' | 'Tareas' | 'Estadisticas'>('Inicio');
-  const [tasks, setTasks] = useState<Task[]>([]);
 
   const renderPage = () => {
     switch (page) {
       case 'Tareas':
-        return <Tareas tasks={tasks} setTasks={setTasks} />;
+        return <Tareas />;
       case 'Estadisticas':
-        return <Estadisticas tasks={tasks} />;
+        return <Estadisticas />;
       default:
         return <Home onNavigate={setPage} />;
     }
@@ -28,6 +26,5 @@ function App() {
     </>
   )
 }
-
 
 export default App;

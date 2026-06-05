@@ -1,6 +1,7 @@
 export interface Task {
-    id: number;
-    title: string; 
-    completed: boolean;
-    priority: string;
+  id: number;
+  Titulo: string;
+  Prioridad: string;
+  Completar: boolean;
+  description?: string;
 }

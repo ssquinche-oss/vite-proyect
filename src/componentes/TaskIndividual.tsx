@@ -22,19 +22,19 @@ function TaskIndividual({ task, onComplete, onDelete }: TaskIndividualProps) {
       padding: '12px 16px',
       marginBottom: '10px',
       borderRadius: '8px',
-      background: task.completed ? '#1a1a1a' : '#2a2a2a',
-      opacity: task.completed ? 0.6 : 1,
+      background: task.Completar ? '#1a1a1a' : '#2a2a2a',
+      opacity: task.Completar ? 0.6 : 1,
       border: '1px solid #444',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <span style={{
-          textDecoration: task.completed ? 'line-through' : 'none',
-          color: task.completed ? '#888' : '#fff',
+          textDecoration: task.Completar ? 'line-through' : 'none',
+          color: task.Completar ? '#888' : '#fff',
           fontSize: '16px',
         }}>
-          {task.completed ? '✔ ' : '○ '}{task.title}
+          {task.Completar ? '✔ ' : '○ '}{task.Titulo}
         </span>
-        <Tag color={colorPrioridad[task.priority]}>{task.priority}</Tag>
+        <Tag color={colorPrioridad[task.Prioridad]}>{task.Prioridad}</Tag>
       </div>
 
       <div style={{ display: 'flex', gap: '8px' }}>
@@ -42,7 +42,7 @@ function TaskIndividual({ task, onComplete, onDelete }: TaskIndividualProps) {
           size="small"
           type="primary"
           onClick={() => onComplete(task.id)}
-          disabled={task.completed}
+          disabled={task.Completar}
         >
           Completar
         </Button>
