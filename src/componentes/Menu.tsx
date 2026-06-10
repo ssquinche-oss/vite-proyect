@@ -13,3 +13,4 @@ function Menu ({ OnNavigate }: { OnNavigate: (page: 'Inicio' | 'Tareas' | 'Estad
 }
 
 export default Menu;
+    
